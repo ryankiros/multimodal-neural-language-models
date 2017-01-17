@@ -304,7 +304,7 @@ class MLBLF(object):
         obj = self.objective(Y, preds)
         return obj
 
-    def train(self, X, indX, XY, V, indV, VY, IM, VIM, count_dict, word_dict, embed_map):
+    def train(self, X, indX, XY, V, indV, VY, IM, VIM, count_dict, word_dict, embed_map, prog):
         """
         Trains the LBL
         """
@@ -320,12 +320,6 @@ class MLBLF(object):
         patience = 10
         count = 0
         done = False
-
-        # Progress printing times
-        _details = 1000
-        _samples = 10000
-        _update = 100000
-        _bleu = 1000000
 
         # Main loop
         lm_tools.display_phase(1)
@@ -352,21 +346,21 @@ class MLBLF(object):
                     break
 
                 # Print out progress
-                if np.mod(minibatch * self.batchsize, _details) == 0 and minibatch > 0:
+                if np.mod(minibatch * self.batchsize, prog['_details']) == 0 and minibatch > 0:
                     print "epoch: %d, pts: %d, time: %.2f" % (epoch, minibatch * self.batchsize, (time.time()-tic)/60)
-                if np.mod(minibatch * self.batchsize, _samples) == 0 and minibatch > 0:
+                if np.mod(minibatch * self.batchsize, prog['_samples']) == 0 and minibatch > 0:
                     print "best: %s" % (scores)
                     print '\nSamples:'
                     lm_tools.generate_and_show(self, word_dict, count_dict, VIM, k=3)
                     print ' '
-                if np.mod(minibatch * self.batchsize, _update) == 0 and minibatch > 0:
+                if np.mod(minibatch * self.batchsize, prog['_update']) == 0 and minibatch > 0:
                     self.update_hyperparams()
                     self.step += 1
                     print "learning rate: %.4f, momentum: %.4f" % (self.eta_t, self.p_t)
 
                 # Compute BLEU
-                if np.mod(minibatch * self.batchsize, _bleu) == 0 and minibatch > 0:
-                    bleu = lm_tools.compute_bleu(self, word_dict, count_dict, VIM, k=3)
+                if np.mod(minibatch * self.batchsize, prog['_bleu']) == 0 and minibatch > 0:
+                    bleu = lm_tools.compute_bleu(self, word_dict, count_dict, VIM, prog, k=3)
                     if bleu[-1] >= best:
                         count = 0
                         best = bleu[-1]

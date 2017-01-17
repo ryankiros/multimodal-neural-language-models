@@ -281,24 +281,26 @@ def generate_and_save(net, z, IM, k=1, model='mlblf', dataset='coco', split='dev
     f.close()
     return captions
 
-def compute_bleu(net, word_dict, index_dict, IM, k=1, maxlen=50, lm=None, beta=0.0, rerank=False):
+def compute_bleu(net, word_dict, index_dict, IM, prog, k=1, maxlen=50, lm=None, beta=0.0, rerank=False):
     """
     Compute BLEU
     """
-    nex = 500
     print '\nComputing BLEU...'
     saveloc = './gen/' + net.name + '_bleu_' + str(k) + '_offdev'
     print saveloc
     captions = []
-    for i in range(0, len(IM[:nex]), 1):
+    for i in range(0, len(IM[:prog['_neval']]), 1):
         c = beam_search(net, word_dict, index_dict, maxlen, IM[i], k=k, N=1, lm=lm, beta=beta, rerank=rerank)[0]
         print (i, ' '.join(c))
         captions.append(c)
     f = open(saveloc, 'wb')
     for c in captions:
         f.write(' '.join(c) + '\n')
-    f.close()   
-    os.system("./gen/multi-bleu.perl ./gen/coco_dev_reference < " + saveloc + ' > ' + saveloc + '_scores')
+    f.close()
+    if prog['_evaldev']:  
+        os.system("./gen/multi-bleu.perl ./gen/coco_dev_reference < " + saveloc + ' > ' + saveloc + '_scores')
+    else:
+        os.system("./gen/multi-bleu.perl ./gen/coco_reference < " + saveloc + ' > ' + saveloc + '_scores')
     f = open(saveloc + '_scores', 'rb')
     bleu = f.readline()
     f.close()

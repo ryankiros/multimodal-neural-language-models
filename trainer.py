@@ -26,11 +26,11 @@ def trainer(z, zd):
     'factors' (mul model only!) int:[50,200], truncate by embedding_size
     """
     d = {}
-    d['model'] = 'add'
-    d['name'] = 'testrun'
+    d['model'] = 'mul'
+    d['name'] = 'testrun2'
     d['loc'] = './models/' + d['model'] + '_' + d['name']
     d['context'] = 5
-    d['learning_rate'] = 0.43
+    d['learning_rate'] = 0.1
     d['momentum'] = 0.23
     d['batch_size'] = 40
     d['maxepoch'] = 10
@@ -39,6 +39,15 @@ def trainer(z, zd):
     d['word_decay'] = 3e-7
     d['context_decay'] = 1e-8
     d['factors'] = 50
+
+    # Progress display and update times
+    prog = {}
+    prog['_details'] = 1000   # How often to display training details
+    prog['_samples'] = 10000  # How often to display samples
+    prog['_update'] = 100000  # How often to update learning rate schedule
+    prog['_bleu'] = 1000000   # How often to compute BLEU
+    prog['_neval'] = 500      # How many development images to evaluate
+    prog['_evaldev'] = True   # Use development set reference captions for eval
 
     print d['loc']
    
@@ -113,7 +122,7 @@ def trainer(z, zd):
     indV = dev_index
     VY = dev_labels
 
-    best = net.train(X, indX, Y, V, indV, VY, trainIM, devIM, index_dict, word_dict, embed_map)
+    best = net.train(X, indX, Y, V, indV, VY, trainIM, devIM, index_dict, word_dict, embed_map, prog)
     return best
 
 def load_embeddings():
