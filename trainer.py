@@ -26,11 +26,11 @@ def trainer(z, zd):
     'factors' (mul model only!) int:[50,200], truncate by embedding_size
     """
     d = {}
-    d['model'] = 'mul'
-    d['name'] = 'testrun2'
+    d['model'] = 'add'
+    d['name'] = 'testrun'
     d['loc'] = './models/' + d['model'] + '_' + d['name']
     d['context'] = 5
-    d['learning_rate'] = 0.1
+    d['learning_rate'] = 0.43
     d['momentum'] = 0.23
     d['batch_size'] = 40
     d['maxepoch'] = 10
