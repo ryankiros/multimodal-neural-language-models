@@ -2,6 +2,10 @@
 
 A bare-bones NumPy implementation of "Multimodal Neural Language Models" (Kiros et al, ICML 2014)
 
+## Visualization
+
+Here are [results](http://www.cs.toronto.edu/~rkiros/bayescapgen.html) on 1000 images using an ensemble of additive log-bilinear models trained using this code.
+
 ## Dependencies
 
 This code is written in python. To use it you will need:
