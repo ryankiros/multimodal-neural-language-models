@@ -27,4 +27,23 @@ You will first need to download the pre-processed MSCOCO data. All necessary fil
     
 After unpacking, open config.py and set the paths accordingly. Then you can proceed to the quickstart instructions. All training settings can be found in trainer.py. Testing trained models is done with tester.py. The lm directory contains classes for the additive and multiplicative log-bilinear models. Helper functions, such as beam search, is found in the utils directory.
 
+## Reference
+
+If you found this code useful, please cite the following paper:
+
+Ryan Kiros, Ruslan Salakhutdinov, Richard S. Zemel. **"Multimodal Neural Language Models."** *ICML (2014).*
+
+    @inproceedings{kiros2014multimodal,
+      title={Multimodal Neural Language Models.},
+      author={Kiros, Ryan and Salakhutdinov, Ruslan and Zemel, Richard S},
+      booktitle={ICML},
+      volume={14},
+      pages={595--603},
+      year={2014}
+    }
+    
+## License
+
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
     
