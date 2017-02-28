@@ -1,6 +1,10 @@
 # multimodal-neural-language-models
 
-A bare-bones NumPy implementation of "Multimodal Neural Language Models" (Kiros et al, ICML 2014)
+A bare-bones NumPy implementation of "Multimodal Neural Language Models" (Kiros et al, ICML 2014), containing additive and multiplicative log-bilinear image caption generators. These models differ from most other image caption generators in that they do not use recurrent neural networks.
+
+This code may be useful to you if you're looking for a simple, bare-bones image caption generator that can be trained on the CPU. It may also be useful for teaching purposes. This code was used as part of an assignment for the undergraduate neural networks class at the University of Toronto.
+
+On MSCOCO using VGG19 features, a single model can achieve BLEU4 score of 25. An ensemble can achieve near 27. For comparison, a "Show and Tell" LSTM with the same features achieves a score of 27.x. The state of the art is currently around 34. Thus these models are quite far from the current state of the art. I am releasing this code for completeness as part of my PhD thesis.
 
 ## Visualization
 
